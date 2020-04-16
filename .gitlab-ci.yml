@@ -19,9 +19,9 @@ job1:
   tags: # 指定使用有 my-tag 标签的runner运行该任务
     - test1
 # 构建阶段2
-job2:
-  stage: Test
-  script:
-    # - service nginx reload 
-  tags:
-    - test    
+# job2:
+#   stage: Test
+#   script:
+#      - service nginx reload 
+#   tags:
+#     - test    
