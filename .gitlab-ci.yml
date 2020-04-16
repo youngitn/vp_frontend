@@ -2,6 +2,7 @@ before_script:
   - echo "begin"
   - pwd
   # - cd /git/front
+  - git checkout -B "$CI_COMMIT_REF_NAME" "$CI_COMMIT_SHA"
   - git pull
 
 after_script:
