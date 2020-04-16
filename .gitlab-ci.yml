@@ -17,7 +17,7 @@ job1:
   script:
     - npm install 
   tags: # 指定使用有 my-tag 标签的runner运行该任务
-    - test1
+    - test
 # 构建阶段2
 # job2:
 #   stage: Test
