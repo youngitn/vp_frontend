@@ -16,7 +16,7 @@ job1:
   script:
     - npm install 
   tags:
-    - test
+    - test1
 # 构建阶段2
 job2:
   stage: Test
