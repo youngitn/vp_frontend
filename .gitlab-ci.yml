@@ -22,6 +22,6 @@ job1:
 job2:
   stage: Test
   script:
-    - service nginx reload 
+    # - service nginx reload 
   tags:
     - test    
