@@ -12,9 +12,9 @@ job2:
   script:
     - echo 'this is stage a job 2'
 
-job3:
-  image: postgres:latest
-  stage: stage_b
-  script:
-    - echo 'this is stage b job 3'
-    - psql --version
+# job3:
+#   image: postgres:latest
+#   stage: stage_b
+#   script:
+#     - echo 'this is stage b job 3'
+#     - psql --version
