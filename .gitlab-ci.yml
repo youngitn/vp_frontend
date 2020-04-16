@@ -1,5 +1,6 @@
 before_script:
   - echo "begin"
+  - pwd
   - cd /git/front
   - git pull
 
@@ -15,7 +16,7 @@ job1:
   stage: Build
   script:
     - npm install 
-  tags:
+  tags: # 指定使用有 my-tag 标签的runner运行该任务
     - test1
 # 构建阶段2
 job2:
