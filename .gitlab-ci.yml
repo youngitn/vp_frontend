@@ -1,7 +1,7 @@
 before_script:
   - echo "begin"
   - pwd
-  - cd /git/front
+  # - cd /git/front
   - git pull
 
 after_script:
