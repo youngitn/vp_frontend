@@ -1,20 +1,26 @@
+before_script:
+  - echo "begin"
+  - cd /git/front
+  - git pull
+
+after_script:
+  - echo "end"
+
 stages:
-  - stage_a
-  - stage_b
+  - Test
+  - Build
 
+# 构建阶段1
 job1:
-  stage: stage_a
+  stage: Build
   script:
-    - echo 'this is stage a job 1'
-
+    - npm install 
+  tags:
+    - test
+# 构建阶段2
 job2:
-  stage: stage_a
+  stage: Test
   script:
-    - echo 'this is stage a job 2'
-
-# job3:
-#   image: postgres:latest
-#   stage: stage_b
-#   script:
-#     - echo 'this is stage b job 3'
-#     - psql --version
+    - service nginx reload 
+  tags:
+    - test    
