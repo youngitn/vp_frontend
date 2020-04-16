@@ -2,7 +2,7 @@ before_script:
   - echo "begin"
   - pwd
   # - cd /git/front
-  - git pull origin/develop
+  - git pull origin develop
 
 after_script:
   - echo "end"
