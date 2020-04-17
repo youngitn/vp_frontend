@@ -18,6 +18,7 @@ job1:
     - npm install
     - npm run build  
     - XCOPY build  D:\testBuild\ /s
+    - all
   tags: # 指定使用有 my-tag 标签的runner运行该任务
     - test
   only:
