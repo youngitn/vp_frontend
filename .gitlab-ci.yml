@@ -15,6 +15,7 @@ stages:
 job1:
   stage: Build
   script:
+    - npm run clean
     - npm install
     - npm run build  
   tags: # 指定使用有 my-tag 标签的runner运行该任务
