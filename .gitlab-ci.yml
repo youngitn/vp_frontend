@@ -48,8 +48,8 @@ build:
         expire_in: 1 hour
         paths:
             - build
-        only:
-            - master
+    only:
+         - master
 deploy_production:
     stage: deploy
     tags: 
