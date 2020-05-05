@@ -116,7 +116,7 @@ const handleEndDateChange=(date,dateValue)=>{
 
 const handleChange = (event) => {
   const cNo = event.target.value;
-  alert(cNo);
+  // alert(cNo);
   setCusNo(cNo);
 };
 
