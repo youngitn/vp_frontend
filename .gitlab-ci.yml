@@ -37,7 +37,7 @@ stages:
 build:
     stage: build
     tags: 
-        - test
+        - winserver
         # - <second tag>
     script:
         - echo "Building deploy package"
@@ -53,16 +53,16 @@ build:
 deploy_production:
     stage: deploy
     tags: 
-      - test
+      - winserver
       # - <second tag>
     script:
         - echo "Deploying to server"
         # - cp -rv build/* /var/www/html/<destination_folder>/
-        - XCOPY build\*  D:\testBuild\ /S/Y
+        - XCOPY build\*  D:\frontend\ /S/Y
         - echo "Deployed"
     environment:
         name: production
-        url: http://127.0.0.1:8100
+        url: http://127.0.0.1:8200
     only:
         - master
    
