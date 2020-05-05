@@ -9,7 +9,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
   } from '@material-ui/pickers';
-import { Button,IconButton,Collapse } from '@material-ui/core';
+import { Button,IconButton,Collapse ,Select} from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
@@ -59,6 +59,7 @@ const MyComponent = (props) =>{
   const [open, setOpen] = useState(false);
   const [pdfOpen, setPdfOpen] = useState(false);
   const { startWaiting, endWaiting, Wait } = useWait();
+  const [cusNo, setCusNo] = useState('065D001');
   const checkResponseStatus=(status)=> {
     let msg = "";
     switch (status) {
@@ -78,7 +79,7 @@ const MyComponent = (props) =>{
 
 const getDecathlonInvoiceInfoByDate=(e)=> {
         
-  fetch('api/DecathlonInvoiceInfoByDate?start='+startDate+'&end='+endDate).then(response => 
+  fetch('api/DecathlonInvoiceInfoByDate?start=' + startDate + '&end=' + endDate + '&cusNo='+ cusNo).then(response => 
     {
       if(response.ok) {
         return response.json();
@@ -113,10 +114,16 @@ const handleEndDateChange=(date,dateValue)=>{
 
 }
 
+const handleChange = (event) => {
+  const cNo = event.target.value;
+  alert(cNo);
+  setCusNo(cNo);
+};
+
 const exportExcel=(e)=> {
   setOpen(true);      
   startWaiting("excel wait");
-  fetch('api/DataToExcel?start='+startDate+'&end='+endDate)
+  fetch('api/DataToExcel?start='+startDate+'&end='+endDate + '&cusNo='+ cusNo)
   .then(response => {
         if(response.ok) {
           endWaiting("excel wait");
@@ -146,7 +153,7 @@ const exportExcel=(e)=> {
 const exportPdf=(e)=> {
   setPdfOpen(true);
   startWaiting("pdf wait");
-  fetch('api/DataToPdf?start='+startDate+'&end='+endDate)
+  fetch('api/DataToPdf?start='+startDate+'&end='+endDate+ '&cusNo='+ cusNo)
   .then(response => {
         if(response.ok) {
           endWaiting("pdf wait");
@@ -205,6 +212,20 @@ const exportPdf=(e)=> {
               'aria-label': 'change date',
             }}
           />
+        </Grid>
+        <Grid item xs={12} sm={2}>
+          <Select
+            native
+            value={cusNo}
+            onChange={handleChange}
+            inputProps={{
+              name: 'cusNo'
+            
+            }}
+          >
+            <option value={'K0064'}>內銷</option>
+            <option value={'065D001'}>外銷</option>
+          </Select>
         </Grid>
         <Grid item xs={12} sm={2}>
           <Button
