@@ -153,12 +153,27 @@ class Members extends Component {
           }}
         icons={tableIcons}
         columns={[
-            { title: '訂單日期', field: 'orderDate',type:'date', render: rowData => <Moment format="YYYY/MM/DD">{rowData.invoiceDate}</Moment>  },
-            { title: '訂單號', field: 'orderNum' },
-            { title: '品名', field: 'productName'},
-            { title: '客戶產品編號', field: 'cusProductNum' },
-            { title: '數量', field: 'qty' , type: 'numeric'},
-            { title: '單價', field: 'unitPrice', type: 'numeric'  },
+            { title: '訂單日期', field: 'sfec013'  },
+            { title: '訂單號', field: 'sfec001' },
+            { title: '品名', field: 'pmaal004'},
+            { title: '客戶產品編號', field: 'xmdh007' },
+            { title: '數量', field: 'inag008' },
+            { title: '單價', field: 'xmdhsite' },
+            { title: '品名', field: 'xmdhseq'},
+            { title: '客戶產品編號', field: 'xmdg005' },
+            { title: '數量', field: 'xmdh006' },
+            { title: '單價', field: 'xmdh015',   },
+            { title: '品名', field: 'imaal003'},
+            { title: '客戶產品編號', field: 'sfec014' },
+            { title: '數量', field: 'xmdhdocno' },
+            { title: '單價', field: 'sfaa050' },
+            { title: '品名', field: 'imaal004'},
+            { title: '客戶產品編號', field: 'xmdhent' },
+            { title: '數量', field: 'xmda033' },
+            { title: '單價', field: 'xmdh016'  },
+
+            { title: '數量', field: 'sfec012' },
+            { title: '單價', field: 'xmdg028' ,type:'date', render: rowData => <Moment format="YYYY/MM/DD">{rowData.xmdg028}</Moment> },
             
             
           ]}
