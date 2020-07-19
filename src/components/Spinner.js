@@ -1,5 +1,5 @@
 import React from 'react'
-function Spinner() {
+function Spinner(props) {
     return (
       <div>
       
@@ -8,7 +8,7 @@ function Spinner() {
         width="24"
         height="24"
         src="https://i.pinimg.com/originals/3e/f0/e6/3ef0e69f3c889c1307330c36a501eb12.gif"
-      />處理中
+      />{props.text}
       </div>
     );
   }

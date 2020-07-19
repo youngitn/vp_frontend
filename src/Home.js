@@ -5,7 +5,7 @@ import MyNavbar from './MyNavbar';
 //import MyCard from './MyCard';
 //import MyCarousel from './MyCarousel';
 //import Rechart from './Rechart';
-import MyComponent from './MyComponent.js';
+import DecathlonInvoiceExport from './DecathlonInvoiceExport.js';
 
 class Home extends Component {
 
@@ -14,7 +14,7 @@ class Home extends Component {
             
             <div>
                 <MyNavbar />
-                <MyComponent />
+                <DecathlonInvoiceExport />
                
             </div>
         );

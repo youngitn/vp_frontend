@@ -44,8 +44,8 @@ class MyNavbar extends Component {
                     />
                     {' VP'}
                 </NavbarBrand>
-                
-                <NavbarToggler onClick={this.toogleNavbar} className="mr-2"/>
+
+                <NavbarToggler onClick={this.toogleNavbar} className="mr-2" />
                 <Collapse isOpen={!this.state.collapse} navbar>
                     <Nav className="ml-auto" navbar>
                         <BrowserRouter>
@@ -53,12 +53,24 @@ class MyNavbar extends Component {
                                 <NavLink href="/">首頁</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/members">test</NavLink>
+                                <NavLink href="/TobePickedShippingInfoList">TobePickedShippingInfoList</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/PendingStorageList">PendingStorageList</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/MateriaPrepareList">MateriaPrepareList</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/WorkOrderProductionScheduleList">WorkOrderProductionScheduleList</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/Demo">demo</NavLink>
                             </NavItem>
                         </BrowserRouter>
                     </Nav>
                 </Collapse>
-              
+
             </Navbar >
         );
     }
