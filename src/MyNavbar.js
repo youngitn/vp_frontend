@@ -65,6 +65,9 @@ class MyNavbar extends Component {
                                 <NavLink href="/WorkOrderProductionScheduleList">WorkOrderProductionScheduleList</NavLink>
                             </NavItem>
                             <NavItem>
+                                <NavLink href="/MES">MES</NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink href="/Demo">demo</NavLink>
                             </NavItem>
                         </BrowserRouter>
