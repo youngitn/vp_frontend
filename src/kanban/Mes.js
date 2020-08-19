@@ -54,6 +54,9 @@ station_name[17] = "VP5-AS-H07";
 station_name[18] = "VP5-AS-H08";
 station_name[19] = "VP5-AS-H12";
 station_name[20] = "VP5-AS-H13";
+station_name[21] = "VP-R81";
+
+
 
 class Mes extends Component {
 
@@ -385,6 +388,8 @@ class Mes extends Component {
                         { title: "料件 規格", field: "M_spec" },
                         { title: "各站 每日完成數量", field: "LINE_complete" },
                         { title: "各站 每日報廢組數", field: "LINE_bad" },
+                       
+                        
                     ]}
 
                     data={InvoiceInfos}
