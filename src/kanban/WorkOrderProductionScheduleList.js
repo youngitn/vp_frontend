@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MaterialTable from "material-table";
 import tableIcons from "../TableIcons";
 import Slider from "@material-ui/core/Slider";
-
+import MyNavbar from '../MyNavbar';
 import Typography from "@material-ui/core/Typography";
 import Moment from "react-moment";
 import "moment-timezone";
@@ -227,6 +227,7 @@ class WorkOrderProductionScheduleList extends Component {
     //console.log(InvoiceInfos);
     return (
       <div style={{ maxWidth: "100%" }}>
+      <MyNavbar></MyNavbar>
         <Helmet>
           <meta
             name="viewport"

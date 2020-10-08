@@ -14,6 +14,7 @@ import MES from './kanban/Mes';
 import Demo from './kanban/MateriaPrepareList_backup';
 import Excel from './Excel';
 import CounterFather from './components/CounterFather';
+import Usdv from './kanban/Usdv';
 // import Vendor from './Vendor';
 //import Certificate from './Certificate';
 
@@ -31,6 +32,7 @@ class App extends Component {
           <Route path="/Excel" component={Excel} exact={true}></Route>
           <Route path="/CounterFather" component={CounterFather} exact={true}></Route>
           <Route path="/Demo" component={Demo} exact={true}></Route>
+          <Route path="/USDV" component={Usdv} exact={true}></Route>
         </Switch>
       </BrowserRouter> 
     );

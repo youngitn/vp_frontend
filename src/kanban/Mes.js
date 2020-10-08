@@ -17,7 +17,7 @@ import KanbanRunner from "./subComponents/KanbanRunner";
 import PageChangeDelayNum from "./subComponents/PageChangeDelayNum";
 import { Helmet } from "react-helmet";
 import Funcs from "./util/Funcs";
-
+import MyNavbar from '../MyNavbar';
 const funcs = new Funcs();
 let sdate = funcs.getDateByAfterDays(1);
 let edate = funcs.getDateByAfterDays(1);
@@ -336,6 +336,7 @@ class Mes extends Component {
         //console.log(InvoiceInfos);
         return (
             <div style={{ maxWidth: "100%" }}>
+            <MyNavbar />
                 <Helmet>
                     <meta
                         name="viewport"

@@ -9,16 +9,13 @@ import {
     NavLink
 } from 'reactstrap';
 import {
-    BrowserRouter,
-    Route,
-    Switch,
-    Link
+    BrowserRouter
 } from 'react-router-dom';
 import logo from './logo.svg';
 
 class MyNavbar extends Component {
     constructor(props) {
-        super(props);
+        super();
         this.state = {
             collapse: true
         };
@@ -50,26 +47,29 @@ class MyNavbar extends Component {
                     <Nav className="ml-auto" navbar>
                         <BrowserRouter>
                             <NavItem>
-                                <NavLink href="/">首頁</NavLink>
+                                <NavLink href="/">迪卡儂發票匯出作業</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/TobePickedShippingInfoList">TobePickedShippingInfoList</NavLink>
+                                <NavLink href="/TobePickedShippingInfoList">待檢貨出貨清單</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/PendingStorageList">PendingStorageList</NavLink>
+                                <NavLink href="/PendingStorageList">待入庫清單</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/MateriaPrepareList">MateriaPrepareList</NavLink>
+                                <NavLink href="/MateriaPrepareList">備料清單</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/WorkOrderProductionScheduleList">WorkOrderProductionScheduleList</NavLink>
+                                <NavLink href="/WorkOrderProductionScheduleList">工單生產進度</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/MES">MES</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/Demo">demo</NavLink>
+                                <NavLink href="/USDV">優適達報表</NavLink>
                             </NavItem>
+                            {/*<NavItem>
+                                 <NavLink href="/Demo">demo</NavLink>
+                            </NavItem>*/}
                         </BrowserRouter>
                     </Nav>
                 </Collapse>

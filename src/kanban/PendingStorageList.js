@@ -13,7 +13,7 @@ import {
   // KeyboardDatePicker,
 } from "@material-ui/pickers";
 import { Select } from "@material-ui/core";
-
+import MyNavbar from '../MyNavbar';
 import DataPerPageMark from "./publicObj/DataPerPageMark";
 import KanbanLocalization from "./publicObj/KanbanLocalization";
 import KanbanRunner from "./subComponents/KanbanRunner";
@@ -260,6 +260,7 @@ class PendingStorageList extends Component {
     //console.log(InvoiceInfos);
     return (
       <div style={{ maxWidth: "100%" }}>
+      <MyNavbar></MyNavbar>
         <Helmet>
           <meta
             name="viewport"

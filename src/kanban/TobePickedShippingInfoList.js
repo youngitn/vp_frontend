@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MaterialTable from "material-table";
-
+import MyNavbar from '../MyNavbar';
 
 import tableIcons from "../TableIcons";
 import Slider from "@material-ui/core/Slider";
@@ -284,6 +284,7 @@ class TobePickedShippingInfoList extends Component {
     //console.log(InvoiceInfos);
     return (
       <div style={{ maxWidth: "100%" }}>
+      <MyNavbar></MyNavbar>
         <Helmet>
           <meta
             name="viewport"
