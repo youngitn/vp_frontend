@@ -71,6 +71,7 @@ class Usdv extends Component {
             data: [],
             Emp_code: '',//量測人員
             ProMachine_Code: '',//生產機台編號
+            Box_Code: '',//生產機台編號
         };
 
 
@@ -93,6 +94,11 @@ class Usdv extends Component {
 
         if (this.state.ProMachine_Code !== '') {
             p = p + mm + 'ProMachine_Code=' + this.state.ProMachine_Code;
+            mm = '&'
+        }
+
+        if (this.state.Box_Code !== '') {
+            p = p + mm + 'Box_Code=' + this.state.Box_Code;
             mm = '&'
         }
         console.log('----->2' + p)
@@ -140,6 +146,11 @@ class Usdv extends Component {
         this.setState({ ProMachine_Code: event.target.value });
     };
 
+    handleBoxCode= (event) => {
+
+        this.setState({ Box_Code: event.target.value });
+    };
+
     render() {
         const data = this.state.data;
         //console.log(InvoiceInfos);
@@ -172,7 +183,9 @@ class Usdv extends Component {
                             </Grid>*/
 
                         }
-
+                        <Grid item sm={12} md={2}>
+                            桶號:<TextField value={this.state.Box_Code} onChange={this.handleBoxCode}></TextField>
+                        </Grid>
                         <Grid item md={2} sm={12}>
                             生產機台編號:<TextField value={this.state.ProMachine_Code} onChange={this.handleProMachineCode}></TextField>
                         </Grid>
