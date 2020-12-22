@@ -22,6 +22,8 @@ const KanbanLocalization={
     toolbar: {
       showColumnsTitle: '設定欄位顯示/隱藏',
       addRemoveColumns: '設定欄位顯示/隱藏',
+      exportName: '匯出 CSV',
+      exportTitle: '匯出 CSV',
     },
     body: {
       emptyDataSourceMessage: '無資料',

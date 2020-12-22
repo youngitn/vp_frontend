@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MaterialTable from "material-table";
-
+import KanbanRunner from "./subComponents/KanbanRunner";
 
 import tableIcons from "../TableIcons";
 import axios from "axios";
@@ -13,7 +13,7 @@ import {
 } from "@material-ui/pickers";
 
 import KanbanLocalization from "./publicObj/KanbanLocalization";
-import { Select, TextField } from '@material-ui/core';
+
 import { Helmet } from "react-helmet";
 import Funcs from "./util/Funcs";
 import MyNavbar from '../MyNavbar';
@@ -22,56 +22,24 @@ const funcs = new Funcs();
 
 const tableRef = React.createRef();
 const kanbanLocalization = KanbanLocalization;
-
-let pmc = [
-    '',
-    '2NC -07',
-    '2NC -20',
-    '2NC-17',
-    '2NC17',
-    '2NC-18',
-    '2-NC-18v',
-    '2NC-11',
-    '2222NC -18',
-    '2NC -10',
-    '2nc -18',
-    '2NC 18',
-    '2NC -19',
-    '2N-07',
-    '2NC -08',
-    '2NC-19',
-    '1-1',
-    '2NC -06',
-    '2NC -11',
-    '2N-08',
-    '2F-11',
-
-    '2NC-07',
-    'N2NC -19',
-    '2NC-06',
-    '2NC--06',
-    '2NC-08',
-    '2NC -09',
-    '2NC  -19',
-    '2NC-20',
-    '2NC-09',
-    '2nc -17',
-    '2N-06',
-    '2N C-17',
-];
+let runFlag = true;
+let pageChangeDelayNum = 5;
+let procData = [];
 
 
 
-class Usdv extends Component {
+
+class TodayShipInfoList extends Component {
 
     constructor(props) {
         super();
 
         this.state = {
             data: [],
-            Emp_code: '',//量測人員
-            ProMachine_Code: '',//生產機台編號
-            Box_Code: '',//生產機台編號
+            pastDaysCount: '-1', //要輸入負數才會符合期望功能 -1=過去一天
+            futureDaysCount: '1',//1=未來一天
+            flag: false,
+            page: 0,
         };
 
 
@@ -82,36 +50,13 @@ class Usdv extends Component {
 
 
     handleGetData = () => {
-        let p = '';
-        let mm = '';
-
-
-        if (this.state.Emp_code !== '') {
-            p = p + mm + 'Emp_code=' + this.state.Emp_code;
-            mm = '&'
-        }
-        console.log('----->1' + p)
-
-        if (this.state.ProMachine_Code !== '') {
-            p = p + mm + 'ProMachine_Code=' + this.state.ProMachine_Code;
-            mm = '&'
-        }
-
-        if (this.state.Box_Code !== '') {
-            p = p + mm + 'Box_Code=' + this.state.Box_Code;
-            mm = '&'
-        }
-        console.log('----->2' + p)
-        if (p !== '') {
-            p = '?' + p;
-        }
-        console.log('----->3' + p)
+        
         var that = this;
-        axios.get('/kanbanApi/getMeasureDataList' + p)
+        axios.get('/kanbanApi/getTodayShipInfoList?ent=100&site=TWVP')
             .then(function (response) {
-                that.handleData(response.data);
+                that.handleData(response.data.data);
                 // handle success
-                console.log(response.data);
+                console.log(response.data.data);
             })
             .catch(function (error) {
                 // handle error
@@ -150,6 +95,61 @@ class Usdv extends Component {
 
         this.setState({ Box_Code: event.target.value });
     };
+    doStop = () => {
+
+        runFlag = false;
+        tableRef.current.setState(tableRef.current.dataManager.getRenderState());
+
+    }
+
+    keepGoing = async () => {
+        runFlag = true;
+
+        this.doPageLoop();
+    }
+    doInit = async () => {
+        runFlag = true;
+        await this.handleGetData();
+        //console.log(procData);
+        this.doPageLoop();
+
+
+    };
+
+    doPageLoop = async () => {
+        let pNum = this.state.page;
+        //迴圈會循序執行邏輯,才會等待
+        for (let i = 30; i > 1; i++) {
+            i = 2;
+            if (!runFlag) {
+                break;
+            }
+            await funcs.delay(pageChangeDelayNum * 1000);
+            //console.log(tableRef.current.dataManager.data.length);
+            //if ((pNum * tableRef.current.dataManager.pageSize) > tableRef.current.dataManager.data.length) {
+            procData= [];
+            //超過可讀取的數量後 重整資料.
+            await this.handleGetData();
+            pNum = 0;
+            //}
+            tableRef.current.dataManager.changeCurrentPage(pNum);
+            let tableState = tableRef.current.dataManager.getRenderState();
+
+
+            tableRef.current.setState(tableState);
+
+            pNum++;
+
+        }
+    }
+
+    handlePastDaysCountChangeByValue = (value) => {
+        
+    }
+
+    handleFutureDaysCountChangeByValue = (value) => {
+       
+    }
 
     render() {
         const data = this.state.data;
@@ -162,7 +162,7 @@ class Usdv extends Component {
                         name="viewport"
                         content="minimum-scale=1, initial-scale=1, width=device-width"
                     />
-                    <title>USDV</title>
+                    <title>今日已建出貨單列表</title>
 
                 </Helmet>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -171,7 +171,7 @@ class Usdv extends Component {
 
 
                         <Grid item sm={12} md={2}>
-                            量測人員:<TextField value={this.state.Emp_code} onChange={this.handleEmpCode}></TextField>
+                            
                         </Grid>
                         {
                             /*
@@ -184,20 +184,23 @@ class Usdv extends Component {
 
                         }
                         <Grid item sm={12} md={2}>
-                            桶號:<TextField value={this.state.Box_Code} onChange={this.handleBoxCode}></TextField>
+                           
                         </Grid>
                         <Grid item md={2} sm={12}>
-                            生產機台編號:<TextField value={this.state.ProMachine_Code} onChange={this.handleProMachineCode}></TextField>
+                            
                         </Grid>
 
                         <Grid>
-                            <button onClick={this.handleGetData}>查詢</button>
+                        <KanbanRunner parentDoInit={this.doInit} parentDoStop={this.doStop} parentKeepGoing={this.keepGoing}
+                                parentHandlePastDaysCountChangeByValue={this.handlePastDaysCountChangeByValue}
+                                parentHandleFutureDaysCountChangeByValue={this.handleFutureDaysCountChangeByValue}
+                            ></KanbanRunner>
                         </Grid>
                     </Grid>
                 </MuiPickersUtilsProvider>
 
                 <MaterialTable
-                    title=""
+                    title="今日已建出貨單列表"
                     // onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
                     options={{
                         search: false,
@@ -209,28 +212,18 @@ class Usdv extends Component {
 
                     icons={tableIcons}
                     columns={[
-                        { title: "流水號", field: "serialNo" },
-                        { title: "桶號", field: "box_Code" },
-                        { title: "量測人員代碼", field: "emp_code" },
-                        { title: "生產機台編號", field: "proMachine_Code" },
-                        { title: "腳本名稱", field: "template" },
-                        { title: "腳本更新日期", field: "updateTime" },
-                        { title: "執行量測時間", field: "measureTime" },
-                        { title: "腳本量測時間", field: "timestamp" },
-                        { title: "ControlItem之量測項目", field: "name" },
-                        { title: "量測上限", field: "usl" },
-                        { title: "量測下限", field: "lsl" },
-                        { title: "量測值", field: "value" },
-                        { title: "量測結果", field: "quality" },
-                        { title: "資料建立日期", field: "createDateTime" },
+                        { title: "出貨單號", field: "xmdkdocno" },
+                        { title: "建立時間", field: "xmdkcrtdt" },
+                        { title: "出通單號", field: "xmdk005" },
+                        // { title: "訂單單號", field: "xmdk006" },
+                        
 
 
 
                     ]}
 
                     data={this.state.data}
-                    tableRef={data}
-                    
+                    tableRef={tableRef}
                     // other props
                     localization={kanbanLocalization}
 
@@ -242,4 +235,4 @@ class Usdv extends Component {
     }
 }
 
-export default Usdv;
+export default TodayShipInfoList;

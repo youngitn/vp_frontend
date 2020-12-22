@@ -67,6 +67,9 @@ class MyNavbar extends Component {
                             <NavItem>
                                 <NavLink href="/USDV">優適達報表</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink href="/TodayShipInfoList">今日已建出貨單列表</NavLink>
+                            </NavItem>
                             {/*<NavItem>
                                  <NavLink href="/Demo">demo</NavLink>
                             </NavItem>*/}
