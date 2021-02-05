@@ -62,6 +62,9 @@ class MyNavbar extends Component {
                                 <NavLink href="/WorkOrderProductionScheduleList">工單生產進度</NavLink>
                             </NavItem>
                             <NavItem>
+                                <NavLink href="/WorkOrderProductionScheduleListByArea">產線區域工單生產排程清單</NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink href="/MES">MES</NavLink>
                             </NavItem>
                             <NavItem>
