@@ -19,8 +19,10 @@ import Spinner from "../components/Spinner";
 import { Helmet } from "react-helmet";
 import DataPerPageMark from "./publicObj/DataPerPageMark";
 import WorkOrderStusCodeMap from "./publicObj/WorkOrderStusCodeMap";
-const marks = DataPerPageMark;
+import PageChangeDelayNum from "./subComponents/PageChangeDelayNum";
 
+const marks = DataPerPageMark;
+let pageChangeDelayNum = 5;
 class WorkOrderProductionScheduleListByArea extends Component {
   constructor(props) {
     super(props);
@@ -38,8 +40,8 @@ class WorkOrderProductionScheduleListByArea extends Component {
     // let lastMDate = this.getOneMonthAgoDate(1);
     let lastMDate = this.getDateByAfterDays(-7);
     this.getWorkAreaList();
-  
-    
+
+
     this.state = {
       InvoiceInfos: [],
       endDate: endDate,
@@ -50,13 +52,14 @@ class WorkOrderProductionScheduleListByArea extends Component {
       hideRun: "",
       hideRunning: "none",
       lastMDate: lastMDate,
-      pastDaysCount: '-1', //要輸入負數才會符合期望功能
-      futureDaysCount: '1',
+      pastDaysCount: '0', //要輸入負數才會符合期望功能
+      futureDaysCount: '0',
       areas: [],
       gzcbl002Value: '',
+      apiStateMsg: '',
 
     };
-   
+
   }
 
   getOneMonthAgoDate = (n) => {
@@ -131,10 +134,12 @@ class WorkOrderProductionScheduleListByArea extends Component {
 
         switch (response.status) {
           case 500:
+
             msg =
               "錯誤碼:500 請檢查 API service server,URL= " +
               url +
               " 來源無回應; 可能是該出貨日期查無資料導致.";
+
             this.setState({ page: 0 });
             break;
           case 404:
@@ -159,7 +164,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
       })
       .catch((error) => {
         console.log(error.message);
-        //alert(error.message);
+
       });
   }
 
@@ -167,7 +172,8 @@ class WorkOrderProductionScheduleListByArea extends Component {
     this.setState({ endDate: this.getDateByAfterDays(parseInt(this.state.futureDaysCount)) });
     this.setState({ lastMDate: this.getDateByAfterDays(parseInt(this.state.pastDaysCount)) });
 
-    await this.delay(6000);//設定等待時間
+    //await this.delay(6000);//設定等待時間
+    await this.delay(pageChangeDelayNum * 1000);
     let endDate = this.state.endDate;
     let startDate = this.state.lastMDate;
 
@@ -181,6 +187,10 @@ class WorkOrderProductionScheduleListByArea extends Component {
     console.log(this.state.endDate);
 
 
+    ////////////////////////////////////////////////
+    /////注意這邊的sfaa020Start&sfaa020End實際是sfaa019 預計開工日,原本是預計完工日
+    /////DAO的sql已經修改了
+    ////////////////////////////////////////////////
     let nowPage = this.state.page;
     let url =
       "kanbanApi/getWorkOrderProductionScheduleListByArea?sfaa020Start=" + startDate;
@@ -188,7 +198,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
     url += "&per_page=" + this.state.perPage;
     url += "&ent=100";
     url += "&site=TWVP";
-    url += "&area=" + this.state.gzcbl002Value; 
+    url += "&area=" + this.state.gzcbl002Value;
     nowPage++;
     url += "&page=" + nowPage;
     this.setState({ page: nowPage });
@@ -223,6 +233,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               url +
               " 來源無回應; 可能是該出貨日期查無資料導致.";
             this.setState({ page: 0 });
+            this.setState({ apiStateMsg: '查無資料或已達最終頁' });
             break;
           case 404:
             msg = "錯誤碼:檢查 請檢察API URL,出現404錯誤";
@@ -235,6 +246,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
         throw new Error(msg);
       })
       .then((data) => {
+        this.setState({ apiStateMsg: '' });
         let rowNum = Object.keys(data.data).length;
 
         //新的資料筆數 != 原資料筆數 表示資料有異動,重新從第一筆開始顯示
@@ -280,12 +292,16 @@ class WorkOrderProductionScheduleListByArea extends Component {
     this.setState({ gzcbl002Value: event.target.value });
   };
 
+  handlePageChangeDelayNum = (value) => {
+    pageChangeDelayNum = value;
+  }
+
   render() {
     const { InvoiceInfos } = this.state;
     //console.log(InvoiceInfos);
     return (
       <div style={{ maxWidth: "100%" }}>
-      <MyNavbar></MyNavbar>
+        <MyNavbar barTitle="工單生產進度表" ></MyNavbar>
         <Helmet>
           <meta
             name="viewport"
@@ -296,13 +312,34 @@ class WorkOrderProductionScheduleListByArea extends Component {
         </Helmet>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
-            <h2>工單生產進度</h2>
+            
+
+            <Grid item xs={12} sm={1}>
+              <Select
+                native
+                value={this.state.gzcbl002Value}
+                onChange={this.handleGzcbl002ValueChange}
+                inputProps={{
+                  name: 'pmds000'
+
+                }}
+              >
+                <option value="">請選擇產線區域</option>
+                {this.state.areas}
+
+              </Select>
+            </Grid>
+            <Grid item xs={12} sm={2} style={{ fontSize: 14 }}>
+              資料範圍,以今日為基準<br />
+            起始:<input size='2' value={this.state.pastDaysCount} onChange={this.handlePastDaysCountChange} type='text'></input>天<br />
+            結束:<input size='2' value={this.state.futureDaysCount} onChange={this.handleFutureDaysCountChange} type='text'></input>天
+            </Grid>
             <Grid item xs={12} sm={2}>
 
               <KeyboardDatePicker
                 margin="normal"
                 id="startDatePicker"
-                label="預計完工日"
+                label="預計開工日-結束範圍"
                 format="yyyy/MM/dd"
                 value={this.state.endDate}
                 onChange={this.handleEndDateChange}
@@ -312,26 +349,8 @@ class WorkOrderProductionScheduleListByArea extends Component {
               />
             </Grid>
             <Grid item xs={12} sm={2}>
-              <Select
-                native
-                value={this.state.gzcbl002Value}
-                onChange={this.handleGzcbl002ValueChange}
-                inputProps={{
-                  name: 'pmds000'
-
-                }}
-              > 
-              <option value="">請選擇產線區域</option>
-                {this.state.areas}
-                
-              </Select>
+              <PageChangeDelayNum parentHandlePageChangeDelayNum={this.handlePageChangeDelayNum}></PageChangeDelayNum>
             </Grid>
-            <Grid item xs={12} sm={2}>
-              資料範圍,以今日為基準<br />
-            起始:<input size='2' value={this.state.pastDaysCount} onChange={this.handlePastDaysCountChange} type='text'></input>天<br />
-            結束:<input size='2' value={this.state.futureDaysCount} onChange={this.handleFutureDaysCountChange} type='text'></input>天
-            </Grid>
-
             <Grid item xs={12} sm={2}>
               <Typography id="discrete-slider" gutterBottom>
                 顯示筆數
@@ -360,6 +379,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             </Grid>
           </Grid>
         </MuiPickersUtilsProvider>
+        <div><center><font color='red'>{this.state.apiStateMsg}</font></center></div>
         <MaterialTable
           title=""
           // onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
@@ -371,15 +391,27 @@ class WorkOrderProductionScheduleListByArea extends Component {
             tableLayout: "auto",
             exportButton: false,
             rowStyle: (rowData) => {
-              let dd = Math.ceil(Math.abs(new Date(rowData.xmdg028) - new Date()) / (1000 * 60 * 60 * 24));
+              //let dd = Math.ceil(Math.abs(new Date(rowData.xmdg028) - new Date()) / (1000 * 60 * 60 * 24));
+              let ret = (Math.round(rowData.sfaa050 / rowData.sfaa012 * 10000) / 100.00);
+              let finished = (ret > 100 ? 100 : ret || 0);
+              // return ({
+
+              //   backgroundColor:
+              //     dd >= 3
+              //       ? "rgba(59, 216, 63, 0.94)"
+              //       : dd > 1 && dd <= 2
+              //         ? "yellow"
+              //         : dd <= 1 && "pink",
+              // })
+
               return ({
 
                 backgroundColor:
-                  dd >= 3
-                    ? "rgba(59, 216, 63, 0.94)"
-                    : dd > 1 && dd <= 2
+                  finished <= 33
+                    ? "pink"
+                    : finished > 33 && finished <= 66
                       ? "yellow"
-                      : dd <= 1 && "pink",
+                      : finished > 66 && "rgba(59, 216, 63, 0.94)",
               })
 
             },
@@ -389,24 +421,41 @@ class WorkOrderProductionScheduleListByArea extends Component {
           columns={[
             {
               title: "狀態", field: "sfaastus", render: (rowData) => {
-                return WorkOrderStusCodeMap.get(rowData.sfaastus);
+                let pcount = parseInt(rowData.sfaa012, 10);
+                let wherehous = parseInt(rowData.sfaa050, 10);
+                let qtyIssued = parseInt(rowData.sfaa049, 10);
+                if (wherehous == 0) {
+                  if (qtyIssued == 0) {
+                    return "發放";
+                  } else if (pcount > qtyIssued) {
+                    return "部分發料";
+                  } else if (pcount == qtyIssued) {
+                    return "全部發料";
+                  }
+                } else {
+                  if (pcount == qtyIssued && pcount > wherehous) {
+                    return "部分入庫";
+                  }
+                }
+
+                //return WorkOrderStusCodeMap.get(rowData.sfaastus);
               }
             },
             { title: "工單單號", field: "sfaadocno" },
-            { title: "生管人員", field: "sfaa002" },
+            //{ title: "生管人員", field: "sfaa002" },
             { title: "姓名", field: "ooag011" },
 
-            {
-              title: "完工比率",
-              field: "doneRate",
-              // render: (rowData) => (
-              //   ((Math.round(rowData.sfaa050 / rowData.sfaa012 * 10000) / 100.00)>100?100:|| 0)+'%'
-              // ),
-              render: (rowData) => {
-                let ret = (Math.round(rowData.sfaa050 / rowData.sfaa012 * 10000) / 100.00);
-                return (ret > 100 ? 100 : ret || 0) + '%'
-              },
-            },
+            // {
+            //   title: "完工比率",
+            //   field: "doneRate",
+            //   // render: (rowData) => (
+            //   //   ((Math.round(rowData.sfaa050 / rowData.sfaa012 * 10000) / 100.00)>100?100:|| 0)+'%'
+            //   // ),
+            //   render: (rowData) => {
+            //     let ret = (Math.round(rowData.sfaa050 / rowData.sfaa012 * 10000) / 100.00);
+            //     return (ret > 100 ? 100 : ret || 0) + '%'
+            //   },
+            // },
 
             {
               title: "預計開工日",
@@ -416,6 +465,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 <Moment format="YYYY/MM/DD">{rowData.sfaa019}</Moment>
               ),
             },
+
             // {
             //   title: "預計完工日",
             //   field: "sfaa020",

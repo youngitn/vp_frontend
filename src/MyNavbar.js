@@ -11,7 +11,9 @@ import {
 import {
     BrowserRouter
 } from 'react-router-dom';
-import logo from './logo.svg';
+
+import Grid from "@material-ui/core/Grid";
+
 
 class MyNavbar extends Component {
     constructor(props) {
@@ -31,18 +33,22 @@ class MyNavbar extends Component {
     render() {
         return (
             <Navbar color="dark" dark>
-                <NavbarBrand href="/" className="mr-auto">
-                    <img
-                        alt=""
-                        src={logo}
-                        width="30"
-                        height="30"
-                        className="d-inline-block align-top"
-                    />
-                    {' VP'}
-                </NavbarBrand>
-
                 <NavbarToggler onClick={this.toogleNavbar} className="mr-2" />
+                
+                <NavbarBrand href="/" className="mr-auto">
+                    <Grid container justify="space-around">
+                        <Grid item xs={12} sm={1}>
+                           
+                            
+                        </Grid>
+                        <Grid item xs={12} sm={1}>
+                            {this.props.barTitle}
+                        </Grid>
+
+                    </Grid>
+                </NavbarBrand>
+                
+                
                 <Collapse isOpen={!this.state.collapse} navbar>
                     <Nav className="ml-auto" navbar>
                         <BrowserRouter>
