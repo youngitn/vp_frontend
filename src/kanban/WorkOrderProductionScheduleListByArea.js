@@ -433,7 +433,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
                     return "全部發料";
                   }
                 } else {
-                  if (pcount == qtyIssued && pcount > wherehous) {
+                  if (/*pcount == qtyIssued &&*/ pcount > wherehous) {
                     return "部分入庫";
                   }
                 }
