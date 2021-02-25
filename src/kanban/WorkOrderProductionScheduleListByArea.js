@@ -466,7 +466,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             },
             {
               title: "工單單號", field: "sfaadocno",
-              width: null, cellStyle: { width: '12%', },
+              width: null, cellStyle: { width: '12%',fontSize: '80%' },
               headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
