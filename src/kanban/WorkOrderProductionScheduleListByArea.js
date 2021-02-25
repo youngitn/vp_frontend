@@ -47,7 +47,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
       InvoiceInfos: [],
       endDate: endDate,
       isLoading: false,
-      perPage: 5,
+      perPage: 15,
       page: 0,
       fullCount: 0,
       hideRun: "",
@@ -358,13 +358,13 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 顯示筆數
               </Typography>
               <Slider
-                defaultValue={5}
+                defaultValue={15}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
                 step={1}
                 marks={marks}
                 min={1}
-                max={10}
+                max={15}
                 onChangeCommitted={this.handlePerPage}
               />
             </Grid>
@@ -416,7 +416,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               // })
 
               return ({
-                fontSize: 10,
+                fontSize: 8,
                 backgroundColor:
                   finished <= 33
                     ? "pink"
