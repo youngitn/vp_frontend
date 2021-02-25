@@ -417,7 +417,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               // })
 
               return ({
-                //fontSize: 8,
+                fontSize: '50%',
                 backgroundColor:
                   finished <= 33
                     ? "pink"
@@ -433,7 +433,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
           columns={[
             {
               title: "狀態", field: "sfaastus",
-              width: null, cellStyle: { width: '10%', },
+              width: null, cellStyle: { width: '8%', },
               render: (rowData) => {
                 let pcount = parseInt(rowData.sfaa012, 10);
                 let wherehous = parseInt(rowData.sfaa050, 10);
@@ -461,7 +461,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             },
             //{ title: "生管人員", field: "sfaa002" },
             { title: "姓名", field: "ooag011" ,
-              width: null, cellStyle: { width: '8%', },},
+              width: null, cellStyle: { width: '7%', },},
 
             // {
             //   title: "完工比率",
