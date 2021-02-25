@@ -397,7 +397,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //maxBodyHeight:800,
             search: false,
             sorting: true,
-            pageSize: 10,
+            pageSize: 15,
             draggable: true,
             //tableLayout: "auto",
             exportButton: false,
@@ -416,7 +416,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               // })
 
               return ({
-                fontSize: 4,
+                fontSize: 10,
                 backgroundColor:
                   finished <= 33
                     ? "pink"
