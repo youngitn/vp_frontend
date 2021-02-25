@@ -20,6 +20,7 @@ import { Helmet } from "react-helmet";
 import DataPerPageMark from "./publicObj/DataPerPageMark";
 import WorkOrderStusCodeMap from "./publicObj/WorkOrderStusCodeMap";
 import PageChangeDelayNum from "./subComponents/PageChangeDelayNum";
+import { fixControlledValue } from "antd/lib/input/Input";
 
 const marks = DataPerPageMark;
 let pageChangeDelayNum = 5;
@@ -57,6 +58,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
       areas: [],
       gzcbl002Value: '',
       apiStateMsg: '',
+      controllPanel: '',
 
     };
 
@@ -301,7 +303,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
     //console.log(InvoiceInfos);
     return (
       <div style={{ maxWidth: "100%" }}>
-        <MyNavbar barTitle="工單生產進度表" ></MyNavbar>
+        {/* <MyNavbar barTitle="工單生產進度表" ></MyNavbar>
         <Helmet>
           <meta
             name="viewport"
@@ -309,10 +311,10 @@ class WorkOrderProductionScheduleListByArea extends Component {
           />
           <title>工單生產進度表</title>
 
-        </Helmet>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid container justify="space-around">
-            
+        </Helmet> */}
+        <MuiPickersUtilsProvider utils={DateFnsUtils} >
+          <Grid container justify="space-around" style={{ display: this.state.controllPanel }}>
+
 
             <Grid item xs={12} sm={1}>
               <Select
@@ -380,15 +382,24 @@ class WorkOrderProductionScheduleListByArea extends Component {
           </Grid>
         </MuiPickersUtilsProvider>
         <div><center><font color='red'>{this.state.apiStateMsg}</font></center></div>
+        <div ><button color='red' style={{ width: "100%", height: "1%" }} onClick={() => {
+          let isShow = this.state.controllPanel;
+
+          isShow == '' ? isShow = 'none' : isShow = '';
+
+          this.setState({ controllPanel: isShow });
+        }}></button></div>
         <MaterialTable
           title=""
           // onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
           options={{
+
+            //maxBodyHeight:800,
             search: false,
             sorting: true,
             pageSize: 10,
             draggable: true,
-            tableLayout: "auto",
+            //tableLayout: "auto",
             exportButton: false,
             rowStyle: (rowData) => {
               //let dd = Math.ceil(Math.abs(new Date(rowData.xmdg028) - new Date()) / (1000 * 60 * 60 * 24));
@@ -405,7 +416,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               // })
 
               return ({
-
+                fontSize: 4,
                 backgroundColor:
                   finished <= 33
                     ? "pink"
@@ -475,12 +486,23 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //   ),
             // },
             { title: '生產料號', field: 'sfaa010' },
-            { title: "料名", field: "imaal003" },
+            {
+              title: "料名", field: "imaal003", render: (rowData) => {
+                const len = 15;
+                if (rowData.imaal003.length > len) {
+                  const final = rowData.imaal003.substring(0, len - 1) + "...";
+                  return final
+                }
+                else {
+                  return rowData.imaal003;
+                }
+              },
+            },
             { title: "生產數量", field: "sfaa012" },
             { title: "生產單位", field: "sfaa013" },
-            { title: "已發料套數", field: "sfaa049" },
-            { title: "已入庫合格量", field: "sfaa050" },
-            //{ title: "已入庫不合格量", field: "sfaa051" },
+            { title: "已發料數", field: "sfaa049" },
+            { title: "已入庫", field: "sfaa050" },
+            //{title: "已入庫不合格量", field: "sfaa051" },
             // {
             //   title: "合格率",
             //   field: "passRate",
@@ -490,7 +512,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //     ((Number(rowData.sfaa050 || 0) / (Number(rowData.sfaa050 || 0) + Number(rowData.sfaa051 || 0) + Number(rowData.sfaa056 || 0))) * 100.00 || 0) + '%'
 
             // },
-            { title: "齊料套數", field: "sfaa071" },
+            { title: "齊料數", field: "sfaa071" },
 
           ]}
           data={InvoiceInfos.data}
