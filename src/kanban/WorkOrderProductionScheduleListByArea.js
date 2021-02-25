@@ -393,13 +393,14 @@ class WorkOrderProductionScheduleListByArea extends Component {
           title=""
           // onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
           options={{
-
+            //padding: "dense",
             //maxBodyHeight:800,
             search: false,
             sorting: true,
             pageSize: 15,
             draggable: true,
             //tableLayout: "auto",
+            //tableLayout: 'fixed',
             exportButton: false,
             rowStyle: (rowData) => {
               //let dd = Math.ceil(Math.abs(new Date(rowData.xmdg028) - new Date()) / (1000 * 60 * 60 * 24));
@@ -416,7 +417,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               // })
 
               return ({
-                fontSize: 8,
+                //fontSize: 8,
                 backgroundColor:
                   finished <= 33
                     ? "pink"
@@ -431,7 +432,9 @@ class WorkOrderProductionScheduleListByArea extends Component {
           icons={tableIcons}
           columns={[
             {
-              title: "狀態", field: "sfaastus", render: (rowData) => {
+              title: "狀態", field: "sfaastus",
+              width: null, cellStyle: { width: '6%', },
+              render: (rowData) => {
                 let pcount = parseInt(rowData.sfaa012, 10);
                 let wherehous = parseInt(rowData.sfaa050, 10);
                 let qtyIssued = parseInt(rowData.sfaa049, 10);
@@ -452,9 +455,13 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 //return WorkOrderStusCodeMap.get(rowData.sfaastus);
               }
             },
-            { title: "工單單號", field: "sfaadocno" },
+            {
+              title: "工單單號", field: "sfaadocno",
+              width: null, cellStyle: { width: '10%', },
+            },
             //{ title: "生管人員", field: "sfaa002" },
-            { title: "姓名", field: "ooag011" },
+            { title: "姓名", field: "ooag011" ,
+              width: null, cellStyle: { width: '5%', },},
 
             // {
             //   title: "完工比率",
@@ -472,6 +479,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               title: "預計開工日",
               field: "sfaa019",
               type: "date",
+              width: null, cellStyle: { width: '5%', },
               render: (rowData) => (
                 <Moment format="YYYY/MM/DD">{rowData.sfaa019}</Moment>
               ),
@@ -485,10 +493,10 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //     <Moment format="YYYY/MM/DD">{rowData.sfaa020}</Moment>
             //   ),
             // },
-            { title: '生產料號', field: 'sfaa010' },
+            { title: '生產料號', field: 'sfaa010', width: null, cellStyle: { width: '5%', },},
             {
               title: "料名", field: "imaal003", render: (rowData) => {
-                const len = 15;
+                const len = 50;
                 if (rowData.imaal003.length > len) {
                   const final = rowData.imaal003.substring(0, len - 1) + "...";
                   return final
@@ -498,10 +506,10 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 }
               },
             },
-            { title: "生產數量", field: "sfaa012" },
-            { title: "生產單位", field: "sfaa013" },
-            { title: "已發料數", field: "sfaa049" },
-            { title: "已入庫", field: "sfaa050" },
+            { title: "生產數量", field: "sfaa012" , width: null, cellStyle: { width: '5%', },},
+            { title: "生產單位", field: "sfaa013" , width: null, cellStyle: { width: '5%', },},
+            { title: "已發料數", field: "sfaa049" , width: null, cellStyle: { width: '5%', },},
+            { title: "已入庫", field: "sfaa050" , width: null, cellStyle: { width: '5%', },},
             //{title: "已入庫不合格量", field: "sfaa051" },
             // {
             //   title: "合格率",
@@ -512,7 +520,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //     ((Number(rowData.sfaa050 || 0) / (Number(rowData.sfaa050 || 0) + Number(rowData.sfaa051 || 0) + Number(rowData.sfaa056 || 0))) * 100.00 || 0) + '%'
 
             // },
-            { title: "齊料數", field: "sfaa071" },
+            { title: "齊料數", field: "sfaa071" , width: null, cellStyle: { width: '5%', },},
 
           ]}
           data={InvoiceInfos.data}
