@@ -457,11 +457,11 @@ class WorkOrderProductionScheduleListByArea extends Component {
             },
             {
               title: "工單單號", field: "sfaadocno",
-              width: null, cellStyle: { width: '10%', },
+              width: null, cellStyle: { width: '12%', },
             },
             //{ title: "生管人員", field: "sfaa002" },
             { title: "姓名", field: "ooag011" ,
-              width: null, cellStyle: { width: '5%', },},
+              width: null, cellStyle: { width: '8%', },},
 
             // {
             //   title: "完工比率",
