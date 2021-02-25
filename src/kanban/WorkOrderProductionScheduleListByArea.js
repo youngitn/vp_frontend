@@ -542,7 +542,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             },
             {
               title: "料名", field: "imaal003",
-              cellStyle: { width: '25%',fontSize: '80%' },
+              cellStyle: { width: '30%',fontSize: '80%' },
               headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
