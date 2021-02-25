@@ -417,7 +417,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               // })
 
               return ({
-                fontSize: '50%',
+                fontSize: '80%',
                 backgroundColor:
                   finished <= 33
                     ? "pink"
