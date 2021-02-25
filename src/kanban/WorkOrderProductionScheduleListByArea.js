@@ -417,7 +417,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               // })
 
               return ({
-                fontSize: '80%',
+                //fontSize: '80%',
                 backgroundColor:
                   finished <= 33
                     ? "pink"
@@ -433,7 +433,14 @@ class WorkOrderProductionScheduleListByArea extends Component {
           columns={[
             {
               title: "狀態", field: "sfaastus",
-              width: null, cellStyle: { width: '8%', },
+              //width: null, cellStyle: { width: '8%', },
+              headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em'
+              },
               render: (rowData) => {
                 let pcount = parseInt(rowData.sfaa012, 10);
                 let wherehous = parseInt(rowData.sfaa050, 10);
@@ -460,8 +467,10 @@ class WorkOrderProductionScheduleListByArea extends Component {
               width: null, cellStyle: { width: '12%', },
             },
             //{ title: "生管人員", field: "sfaa002" },
-            { title: "姓名", field: "ooag011" ,
-              width: null, cellStyle: { width: '7%', },},
+            {
+              title: "姓名", field: "ooag011",
+              width: null, cellStyle: { width: '7%', },
+            },
 
             // {
             //   title: "完工比率",
@@ -478,6 +487,13 @@ class WorkOrderProductionScheduleListByArea extends Component {
             {
               title: "預計開工日",
               field: "sfaa019",
+              headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em'
+              },
               type: "date",
               width: null, cellStyle: { width: '5%', },
               render: (rowData) => (
@@ -493,7 +509,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //     <Moment format="YYYY/MM/DD">{rowData.sfaa020}</Moment>
             //   ),
             // },
-            { title: '生產料號', field: 'sfaa010', width: null, cellStyle: { width: '5%', },},
+            { title: '生產料號', field: 'sfaa010', width: null, cellStyle: { width: '5%', }, },
             {
               title: "料名", field: "imaal003", render: (rowData) => {
                 const len = 50;
@@ -506,10 +522,34 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 }
               },
             },
-            { title: "生產數量", field: "sfaa012" , width: null, cellStyle: { width: '5%', },},
-            { title: "生產單位", field: "sfaa013" , width: null, cellStyle: { width: '5%', },},
-            { title: "已發料數", field: "sfaa049" , width: null, cellStyle: { width: '5%', },},
-            { title: "已入庫", field: "sfaa050" , width: null, cellStyle: { width: '5%', },},
+            { title: "生產數量", field: "sfaa012", width: null, cellStyle: { width: '5%', }, headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em'
+              },},
+            { title: "生產單位", field: "sfaa013", width: null, cellStyle: { width: '5%', }, headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em'
+              },},
+            { title: "已發料數", field: "sfaa049", width: null, cellStyle: { width: '5%', }, headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em'
+              },},
+            { title: "已入庫", field: "sfaa050", width: null, cellStyle: { width: '5%', }, headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em'
+              },},
             //{title: "已入庫不合格量", field: "sfaa051" },
             // {
             //   title: "合格率",
@@ -520,7 +560,13 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //     ((Number(rowData.sfaa050 || 0) / (Number(rowData.sfaa050 || 0) + Number(rowData.sfaa051 || 0) + Number(rowData.sfaa056 || 0))) * 100.00 || 0) + '%'
 
             // },
-            { title: "齊料數", field: "sfaa071" , width: null, cellStyle: { width: '5%', },},
+            { title: "齊料數", field: "sfaa071", width: null, cellStyle: { width: '5%', }, headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em'
+              },},
 
           ]}
           data={InvoiceInfos.data}
