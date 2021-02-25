@@ -439,7 +439,8 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 maxWidth: '1%',
                 whiteSpace: 'nowrap',
                 paddingLeft: '1em',
-                paddingRight: '1em'
+                paddingRight: '1em',
+                fontSize: '120%'
               },
               render: (rowData) => {
                 let pcount = parseInt(rowData.sfaa012, 10);
@@ -465,11 +466,27 @@ class WorkOrderProductionScheduleListByArea extends Component {
             {
               title: "工單單號", field: "sfaadocno",
               width: null, cellStyle: { width: '12%', },
+              headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
             },
             //{ title: "生管人員", field: "sfaa002" },
             {
               title: "姓名", field: "ooag011",
               width: null, cellStyle: { width: '7%', },
+              headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
             },
 
             // {
@@ -492,7 +509,8 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 maxWidth: '1%',
                 whiteSpace: 'nowrap',
                 paddingLeft: '1em',
-                paddingRight: '1em'
+                paddingRight: '1em',
+                fontSize: '120%'
               },
               type: "date",
               width: null, cellStyle: { width: '5%', },
@@ -509,9 +527,29 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //     <Moment format="YYYY/MM/DD">{rowData.sfaa020}</Moment>
             //   ),
             // },
-            { title: '生產料號', field: 'sfaa010', width: null, cellStyle: { width: '5%', }, },
             {
-              title: "料名", field: "imaal003", render: (rowData) => {
+              title: '生產料號', field: 'sfaa010', width: null,
+              headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
+              cellStyle: { width: '5%', }, fontSize: '120%'
+            },
+            {
+              title: "料名", field: "imaal003",
+              headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
+              render: (rowData) => {
                 const len = 50;
                 if (rowData.imaal003.length > len) {
                   const final = rowData.imaal003.substring(0, len - 1) + "...";
@@ -522,34 +560,46 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 }
               },
             },
-            { title: "生產數量", field: "sfaa012", width: null, cellStyle: { width: '5%', }, headerStyle: {
+            {
+              title: "生產數量", field: "sfaa012", width: null, cellStyle: { width: '5%', }, headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
                 whiteSpace: 'nowrap',
                 paddingLeft: '1em',
-                paddingRight: '1em'
-              },},
-            { title: "生產單位", field: "sfaa013", width: null, cellStyle: { width: '5%', }, headerStyle: {
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
+            },
+            {
+              title: "生產單位", field: "sfaa013", width: null, cellStyle: { width: '5%', }, headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
                 whiteSpace: 'nowrap',
                 paddingLeft: '1em',
-                paddingRight: '1em'
-              },},
-            { title: "已發料數", field: "sfaa049", width: null, cellStyle: { width: '5%', }, headerStyle: {
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
+            },
+            {
+              title: "已發料數", field: "sfaa049", width: null, cellStyle: { width: '5%', }, headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
                 whiteSpace: 'nowrap',
                 paddingLeft: '1em',
-                paddingRight: '1em'
-              },},
-            { title: "已入庫", field: "sfaa050", width: null, cellStyle: { width: '5%', }, headerStyle: {
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
+            },
+            {
+              title: "已入庫", field: "sfaa050", width: null, cellStyle: { width: '5%', }, headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
                 whiteSpace: 'nowrap',
                 paddingLeft: '1em',
-                paddingRight: '1em'
-              },},
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
+            },
             //{title: "已入庫不合格量", field: "sfaa051" },
             // {
             //   title: "合格率",
@@ -560,13 +610,16 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //     ((Number(rowData.sfaa050 || 0) / (Number(rowData.sfaa050 || 0) + Number(rowData.sfaa051 || 0) + Number(rowData.sfaa056 || 0))) * 100.00 || 0) + '%'
 
             // },
-            { title: "齊料數", field: "sfaa071", width: null, cellStyle: { width: '5%', }, headerStyle: {
+            {
+              title: "齊料數", field: "sfaa071", width: null, cellStyle: { width: '5%', }, headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
                 whiteSpace: 'nowrap',
                 paddingLeft: '1em',
-                paddingRight: '1em'
-              },},
+                paddingRight: '1em',
+                fontSize: '120%'
+              },
+            },
 
           ]}
           data={InvoiceInfos.data}
