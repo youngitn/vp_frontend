@@ -433,7 +433,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
           columns={[
             {
               title: "狀態", field: "sfaastus",
-              width: null, cellStyle: { width: '6%', },
+              width: null, cellStyle: { width: '10%', },
               render: (rowData) => {
                 let pcount = parseInt(rowData.sfaa012, 10);
                 let wherehous = parseInt(rowData.sfaa050, 10);
