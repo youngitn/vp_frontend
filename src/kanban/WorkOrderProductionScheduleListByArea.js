@@ -420,10 +420,14 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 //fontSize: '80%',
                 backgroundColor:
                   finished <= 33
-                    ? "pink"
+                    ? "red"
                     : finished > 33 && finished <= 66
                       ? "yellow"
                       : finished > 66 && "rgba(59, 216, 63, 0.94)",
+                color:
+                  finished <= 33
+                    ? "white":"black"
+                    ,
               })
 
             },
@@ -433,7 +437,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
           columns={[
             {
               title: "狀態", field: "sfaastus",
-              width: null, 
+              width: null,
               cellStyle: { width: '8%', },
               headerStyle: {
                 width: '1%',
@@ -514,7 +518,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 fontSize: '110%'
               },
               type: "date",
-              width: null, cellStyle: { width: '5%', fontSize: '110%'},
+              width: null, cellStyle: { width: '5%', fontSize: '110%' },
               render: (rowData) => (
                 <Moment format="YYYY/MM/DD">{rowData.sfaa019}</Moment>
               ),
@@ -542,7 +546,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             },
             {
               title: "料名", field: "imaal003",
-              cellStyle: { width: '30%',fontSize: '80%' },
+              cellStyle: { width: '30%', fontSize: '80%' },
               headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
@@ -563,7 +567,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               },
             },
             {
-              title: "生產數量", field: "sfaa012", 
+              title: "生產數量", field: "sfaa012",
               cellStyle: { width: '2%' },
               headerStyle: {
                 width: '2%',
@@ -575,8 +579,8 @@ class WorkOrderProductionScheduleListByArea extends Component {
               },
             },
             {
-              title: "生產單位", field: "sfaa013", 
-              cellStyle: { width: '5%',fontSize: '80%' },
+              title: "生產單位", field: "sfaa013",
+              cellStyle: { width: '5%', fontSize: '80%' },
               headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
@@ -587,7 +591,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               },
             },
             {
-              title: "已發料數", field: "sfaa049", 
+              title: "已發料數", field: "sfaa049",
               cellStyle: { width: '2%' },
               headerStyle: {
                 width: '1%',
@@ -599,7 +603,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
               },
             },
             {
-              title: "已入庫", field: "sfaa050", 
+              title: "已入庫", field: "sfaa050",
               cellStyle: { width: '2%' },
               headerStyle: {
                 width: '1%',
@@ -622,7 +626,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             // },
             {
               title: "齊料數", field: "sfaa071",
-              cellStyle: { width: '2%' }, 
+              cellStyle: { width: '2%' },
               headerStyle: {
                 width: '1%',
                 maxWidth: '1%',
