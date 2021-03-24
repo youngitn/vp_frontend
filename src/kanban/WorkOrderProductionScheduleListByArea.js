@@ -433,6 +433,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
 
           this.setState({ controllPanel: isShow });
         }}></button></div>
+        <h1 style={{color:'red'}}>資料總筆數: {this.state.totalNum}</h1>
         <MaterialTable
           title=""
           // onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
@@ -441,7 +442,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //maxBodyHeight:800,
             search: false,
             sorting: true,
-            pageSize: 15,
+            pageSize: this.state.perPage,
             draggable: true,
             //tableLayout: "auto",
             //tableLayout: 'fixed',
@@ -574,7 +575,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 fontSize: '110%'
               },
               type: "date",
-              width: null, cellStyle: { width: '5%', fontSize: '110%' },
+              width: null, cellStyle: { width: '1%', fontSize: '100%' },
               render: (rowData) => (
                 <Moment format="YYYY/MM/DD">{rowData.sfaa019}</Moment>
               ),
@@ -592,7 +593,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 fontSize: '110%'
               },
               type: "date",
-              width: null, cellStyle: { width: '5%', fontSize: '110%' },
+              width: null, cellStyle: { width: '1%', fontSize: '100%' },
               render: (rowData) => (
                 <Moment format="YYYY/MM/DD">{rowData.sfaa020}</Moment>
               ),
@@ -711,7 +712,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             Pagination: (props) => <td></td>,
           }}
         />
-        <h1 style={{color:'red'}}>資料總筆數: {this.state.totalNum}</h1>
+        
       </div>
     );
   }
