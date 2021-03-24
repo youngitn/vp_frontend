@@ -12,15 +12,15 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-import { IconButton } from "@material-ui/core";
+import { colors, IconButton } from "@material-ui/core";
 import YoutubeSearchedForIcon from "@material-ui/icons/YoutubeSearchedFor";
 import { Select } from "@material-ui/core";
 import Spinner from "../components/Spinner";
-import { Helmet } from "react-helmet";
+import moment from 'moment';
 import DataPerPageMark from "./publicObj/DataPerPageMark";
-import WorkOrderStusCodeMap from "./publicObj/WorkOrderStusCodeMap";
+
 import PageChangeDelayNum from "./subComponents/PageChangeDelayNum";
-import { fixControlledValue } from "antd/lib/input/Input";
+
 
 const marks = DataPerPageMark;
 let pageChangeDelayNum = 5;
@@ -59,6 +59,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
       gzcbl002Value: '',
       apiStateMsg: '',
       controllPanel: '',
+      totalNum: 0,
 
     };
 
@@ -119,6 +120,8 @@ class WorkOrderProductionScheduleListByArea extends Component {
     clearInterval(this.interval);
   }
 
+
+  
 
   getWorkAreaList = async () => {
     let url =
@@ -196,26 +199,23 @@ class WorkOrderProductionScheduleListByArea extends Component {
     let nowPage = this.state.page;
     let url =
       "kanbanApi/getWorkOrderProductionScheduleListByArea?sfaa020Start=" + startDate;
+    let urlToGetTotalNum =
+      "kanbanApi/getWorkOrderProductionScheduleListByAreaTotalNumber?sfaa020Start=" + startDate;
     url += "&sfaa020End=" + endDate;
+    urlToGetTotalNum += "&sfaa020End=" + endDate;
     url += "&per_page=" + this.state.perPage;
+    urlToGetTotalNum += "&per_page=" + this.state.perPage;
     url += "&ent=100";
+    urlToGetTotalNum += "&ent=100";
     url += "&site=TWVP";
+    urlToGetTotalNum += "&site=TWVP";
     url += "&area=" + this.state.gzcbl002Value;
+    urlToGetTotalNum += "&area=" + this.state.gzcbl002Value;
     nowPage++;
     url += "&page=" + nowPage;
+    urlToGetTotalNum += "&page=" + nowPage;
     this.setState({ page: nowPage });
 
-    console.log(url);
-
-    console.log(
-      "now page:" +
-      nowPage +
-      " ,in dao is OFFSET " +
-      this.state.perPage * (nowPage - 1) +
-      " ROWS FETCH NEXT " +
-      this.state.perPage +
-      " ROWS ONLY"
-    );
 
     await fetch(url)
       .then((response) => {
@@ -267,7 +267,51 @@ class WorkOrderProductionScheduleListByArea extends Component {
         console.log(error.message);
         //alert(error.message);
       });
+
+      await fetch(urlToGetTotalNum)
+      .then((response) => {
+
+        //response.json()
+        if (response.ok) {
+          
+
+          return response.json();
+        }
+        let msg = "";
+
+        switch (response.status) {
+          case 500:
+            msg =
+              "錯誤碼:500 請檢查 API service server,URL= " +
+              urlToGetTotalNum +
+              " 來源無回應; 可能是該出貨日期查無資料導致.";
+
+            break;
+          case 404:
+            msg = "錯誤碼:檢查 請檢察API URL,出現404錯誤";
+            break;
+          default:
+            msg = "錯誤碼:" + response.status + " 請檢察API URL,出現404錯誤";
+            break;
+        }
+        //this.setState({InvoiceInfos: []});
+        throw new Error(msg);
+      })
+      .then((data) => {
+  
+        this.setState({ 
+          totalNum:data,
+        });
+        
+      })
+      .catch((error) => {
+        console.log(error.message);
+        //alert(error.message);
+      });
   };
+
+
+ 
 
   handlePerPage = (event, newValue) => {
     //alert(newValue);
@@ -403,32 +447,44 @@ class WorkOrderProductionScheduleListByArea extends Component {
             //tableLayout: 'fixed',
             exportButton: false,
             rowStyle: (rowData) => {
-              //let dd = Math.ceil(Math.abs(new Date(rowData.xmdg028) - new Date()) / (1000 * 60 * 60 * 24));
-              let ret = (Math.round(rowData.sfaa050 / rowData.sfaa012 * 10000) / 100.00);
-              let finished = (ret > 100 ? 100 : ret || 0);
-              // return ({
-
-              //   backgroundColor:
-              //     dd >= 3
-              //       ? "rgba(59, 216, 63, 0.94)"
-              //       : dd > 1 && dd <= 2
-              //         ? "yellow"
-              //         : dd <= 1 && "pink",
-              // })
-
-              return ({
-                //fontSize: '80%',
-                backgroundColor:
-                  finished <= 33
-                    ? "red"
-                    : finished > 33 && finished <= 66
-                      ? "yellow"
-                      : finished > 66 && "rgba(59, 216, 63, 0.94)",
-                color:
-                  finished <= 33
-                    ? "white":"black"
-                    ,
-              })
+              let dataDate = moment(rowData.sfaa020).format('YYYY/MM/DD');
+              let now = moment().format('YYYY/MM/DD');
+              // console.log(moment(rowData.sfaa020).format('YYYY/MM/DD'));
+              // console.log(moment(rowData.sfaa020).diff(moment().format('YYYY/MM/DD'),'days'));
+              let diffDays = moment(rowData.sfaa020).diff(moment().format('YYYY/MM/DD'),'days');
+              //完工日=今天但還未完工 紅色
+              if (diffDays == 0 ) {
+                return ({
+                  //fontSize: '80%',
+                  backgroundColor:
+                     "red"
+                        ,
+                  color:
+                     "white"
+                  ,
+                })
+              }else if (diffDays > 1 && diffDays <= 1){
+                return ({
+                  //fontSize: '80%',
+                  backgroundColor:
+                     "yellow"
+                        ,
+                  color:
+                     "black"
+                  ,
+                });
+              }else{
+                return ({
+                  //fontSize: '80%',
+                  backgroundColor:
+                     "rgba(59, 216, 63, 0.94)"
+                        ,
+                  color:
+                     "black"
+                  ,
+                });
+              }
+              
 
             },
 
@@ -524,14 +580,23 @@ class WorkOrderProductionScheduleListByArea extends Component {
               ),
             },
 
-            // {
-            //   title: "預計完工日",
-            //   field: "sfaa020",
-            //   type: "date",
-            //   render: (rowData) => (
-            //     <Moment format="YYYY/MM/DD">{rowData.sfaa020}</Moment>
-            //   ),
-            // },
+            {
+              title: "預計完工日",
+              field: "sfaa020",
+              headerStyle: {
+                width: '1%',
+                maxWidth: '1%',
+                whiteSpace: 'nowrap',
+                paddingLeft: '1em',
+                paddingRight: '1em',
+                fontSize: '110%'
+              },
+              type: "date",
+              width: null, cellStyle: { width: '5%', fontSize: '110%' },
+              render: (rowData) => (
+                <Moment format="YYYY/MM/DD">{rowData.sfaa020}</Moment>
+              ),
+            },
             {
               title: '生產料號', field: 'sfaa010', width: null,
               headerStyle: {
@@ -646,6 +711,7 @@ class WorkOrderProductionScheduleListByArea extends Component {
             Pagination: (props) => <td></td>,
           }}
         />
+        <h1 style={{color:'red'}}>資料總筆數: {this.state.totalNum}</h1>
       </div>
     );
   }
