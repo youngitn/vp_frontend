@@ -214,6 +214,8 @@ class WorkOrderProductionScheduleListByArea extends Component {
     nowPage++;
     url += "&page=" + nowPage;
     urlToGetTotalNum += "&page=" + nowPage;
+    url += "&sfaa057=1";
+    urlToGetTotalNum += "&sfaa057=1";
     this.setState({ page: nowPage });
 
 
