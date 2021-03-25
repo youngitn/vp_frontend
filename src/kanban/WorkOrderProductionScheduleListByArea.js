@@ -458,20 +458,20 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 return ({
                   //fontSize: '80%',
                   backgroundColor:
-                     "red"
-                        ,
-                  color:
-                     "white"
-                  ,
-                })
-              }else if (diffDays > 1 && diffDays <= 1){
-                return ({
-                  //fontSize: '80%',
-                  backgroundColor:
                      "yellow"
                         ,
                   color:
                      "black"
+                  ,
+                })
+              }else if (diffDays < 0){
+                return ({
+                  //fontSize: '80%',
+                  backgroundColor:
+                     "red"
+                        ,
+                  color:
+                     "white"
                   ,
                 });
               }else{
