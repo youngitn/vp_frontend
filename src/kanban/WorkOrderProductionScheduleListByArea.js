@@ -510,6 +510,9 @@ class WorkOrderProductionScheduleListByArea extends Component {
                 let pcount = parseInt(rowData.sfaa012, 10);
                 let wherehous = parseInt(rowData.sfaa050, 10);
                 let qtyIssued = parseInt(rowData.sfaa049, 10);
+                if (rowData.sfaastus == 'Y'){
+                  return "已確認";
+                }
                 if (wherehous == 0) {
                   if (qtyIssued == 0) {
                     return "發放";
