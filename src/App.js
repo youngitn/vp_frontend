@@ -11,6 +11,7 @@ import PendingStorageList from './kanban/PendingStorageList';
 import MateriaPrepareList from './kanban/MateriaPrepareList';
 import WorkOrderProductionScheduleList from './kanban/WorkOrderProductionScheduleList';
 import WorkOrderProductionScheduleListByArea from './kanban/WorkOrderProductionScheduleListByArea';
+import OutsourcingWorkOrderProductionScheduleListByArea from './kanban/OutsourcingWorkOrderProductionScheduleListByArea';
 import MES from './kanban/Mes';
 import Demo from './kanban/MateriaPrepareList_backup';
 import Excel from './Excel';
@@ -32,6 +33,7 @@ class App extends Component {
           <Route path="/MateriaPrepareList" component={MateriaPrepareList} exact={true}></Route>
           <Route path="/WorkOrderProductionScheduleList" component={WorkOrderProductionScheduleList} exact={true}></Route>
           <Route path="/WorkOrderProductionScheduleListByArea" component={WorkOrderProductionScheduleListByArea} exact={true}></Route>
+          <Route path="/OutsourcingWorkOrderProductionScheduleListByArea" component={OutsourcingWorkOrderProductionScheduleListByArea} exact={true}></Route>
           <Route path="/Excel" component={Excel} exact={true}></Route>
           <Route path="/CounterFather" component={CounterFather} exact={true}></Route>
           <Route path="/Demo" component={Demo} exact={true}></Route>
