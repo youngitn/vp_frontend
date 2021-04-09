@@ -74,6 +74,9 @@ class MyNavbar extends Component {
                                 <NavLink href="/OutsourcingWorkOrderProductionScheduleListByArea">產線區域委外工單生產排程清單</NavLink>
                             </NavItem>
                             <NavItem>
+                                <NavLink href="/NoShippingNoticeInfoList">已完工入庫、無出貨通知單清單</NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink href="/MES">MES</NavLink>
                             </NavItem>
                             <NavItem>
