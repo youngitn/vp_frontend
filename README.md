@@ -7,6 +7,9 @@ master push to gitlab will trigger CI/CD action.
 定義檔:gitlab-ci.yml
 
 
+> 目前暫以拷貝方式以快速搭建新看板,盡量於撰寫過程中提取共用元件慢慢消化技術債.
+
+
 ## Available Scripts
 
 執行:
