@@ -1,6 +1,18 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## 輪播式看板
+
+master push to gitlab will trigger CI/CD action.
+
+定義檔:gitlab-ci.yml
+
+
 ## Available Scripts
+
+執行:
+### `npm run start`
+
+
 
 In the project directory, you can run:
 
