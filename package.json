@@ -34,7 +34,7 @@
     "react-wait": "^0.3.0",
     "reactstrap": "^8.9.0",
     "recharts": "^2.0.6",
-    "xlsx": "^0.15.6",
+    "xlsx": "^0.17.0",
     "xlsx-style": "^0.8.13"
   },
   "scripts": {
